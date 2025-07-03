@@ -16,7 +16,7 @@ node_modules
 **/.DS_Store
 
 # ignore README.md file
-# README.md
+README.md
 
 # ignore pnpm-lock.yaml file
 pnpm-lock.yaml
