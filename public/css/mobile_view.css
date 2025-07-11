@@ -1,0 +1,45 @@
+:root{
+  --important-font-clr: #191933;
+  --left-right-padding: 10px;
+}
+
+@media screen and (max-width: 730px) {
+
+    body{
+        background: #fff;
+    }
+    #wrapper{
+        margin: 0 auto;
+        border-radius: 0;
+        box-sizing: border-box;
+        border: none;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+    .bck_motor{
+        width: 100%;
+        max-width: 500px;
+        min-width: 200px;
+    }
+
+    .bck_grid section{
+        max-height: 200px;
+        align-self: center;
+    }
+
+    .upgrade_grid{
+        display: grid;
+        grid-template: 1fr 1fr / 1fr;
+    }
+
+    .upgrade_grid section:nth-child(1){
+        padding-right: var(--left-right-padding);
+    }
+
+    .upgrade_grid section:nth-child(2){
+        grid-row: 1 / 2;
+        padding-left: var(--left-right-padding);
+    }
+}
