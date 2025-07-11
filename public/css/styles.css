@@ -81,19 +81,17 @@ a{
   display: flex;
   list-style-type: none;
   width: 98%;
+  margin: 0 auto;
   justify-self: center;
   padding: 0;
   justify-content: space-around;
+  align-self: center;
   align-items: center;
   height: 40px;
   background-color: var(--important-font-clr);
 }
 
-.navigation ul{
-  justify-self: center;
-  justify-content: center;
-  align-self: center;
-}
+
 .navigation li a{
   color: #fff;
   text-decoration: none;
@@ -198,6 +196,8 @@ a{
 .upgrade_grid section:nth-child(1) div{
   display: grid;
   grid-template: 1fr auto / 1fr;
+  justify-content: center;
+  justify-items: center;
 }
 
 .upgrade_grid section:nth-child(1) div span{
