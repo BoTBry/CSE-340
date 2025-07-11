@@ -89,6 +89,11 @@ a{
   background-color: var(--important-font-clr);
 }
 
+.navigation ul{
+  justify-self: center;
+  justify-content: center;
+  align-self: center;
+}
 .navigation li a{
   color: #fff;
   text-decoration: none;
@@ -198,6 +203,8 @@ a{
 .upgrade_grid section:nth-child(1) div span{
   display: block;
   justify-items: center;
+  justify-self: center;
+  justify-content: center;
   align-content: center;
   width: 100%;
   background-color: #0963ff;
@@ -206,6 +213,8 @@ a{
 
 .upgrade_grid section:nth-child(1) div span img{
   display: block;
+  align-self: center;
+  justify-self: center;
 }
 
 .upgrade_grid section:nth-child(1) div a{
