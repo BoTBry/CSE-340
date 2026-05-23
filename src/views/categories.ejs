@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+
+    <main>
+
+        <h1><%= title %></h1>
+        <ul>
+            <% categories.forEach(item => { %>
+                <li> <%= item %></li>
+            <% }); %>
+        </ul>
+
+    </main>
+
+<%- include('partials/footer') %>
