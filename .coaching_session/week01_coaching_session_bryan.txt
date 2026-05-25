@@ -1,0 +1,46 @@
+Week 01 Coaching Session Transcript
+
+Assistant: Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say "I don't know" or "I made a mistake." That's the fastest way we'll learn today.
+
+Assistant: What name would you like me to use for you in this session?
+
+User: Bryan
+
+Assistant: Nice, Bryan. This is a safe learning space...
+
+TOPIC 1: EXPRESS ROUTING
+Assistant: app.get('/about', ...) explanation
+User: This gets the page which belongs to the "/about" route
+Assistant: Clarification about routing rules
+
+Assistant: What does res.render() do?
+User: It looks for the EJS file then assigns variables
+Assistant: Refined explanation
+
+TOPIC 2: JAVASCRIPT PRINCIPLES
+Assistant: function formatTitle(title) {...}
+User: It returns uppercase word
+Assistant: confirmation + trim explanation
+
+Assistant: Why use trim()?
+User: It removes whitespace
+Assistant: confirmation
+
+TOPIC 3: EJS PARTIALS
+Assistant: include(header/footer)
+User: reusable and easier to edit
+Assistant: confirmation
+
+TOPIC 4: CSS
+Assistant: CSS example provided
+User: explains background + h1 styling
+Assistant: confirmation
+
+FINAL REVIEW
+Assistant: What was confusing?
+User: Express Routing
+Assistant: explanation of routing + 404 behavior
+User: An error message?
+Assistant: clarified 404 Not Found
+
+END OF SESSION

@@ -5,7 +5,24 @@ html, body {
     padding: 20px;
 }
 
+html{
+    overflow-x: hidden;
+    background-image: url(../images/checkerboard.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 body {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    height: 80vh;
+    min-height: max-content;
+    border-radius: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 5px 5px 15px 1px black;
     nav {
         ul {
             list-style-type: none;
@@ -28,3 +45,65 @@ body {
         }
     }
 }        
+
+nav{
+    width: 100%;
+    max-width: 800px;
+    justify-self: center;
+    justify-items: center;
+    align-content: center;
+    height: 50px;
+}
+
+nav ul{
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    align-items: center;
+}
+
+nav ul li a{
+    color: azure;
+    display: inline-block;
+    background-color: rgb(2, 26, 50);
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+nav ul li a:hover{
+    color: orange;
+    transform: scale(1.05);
+}
+
+main{
+    margin: 0 60px;
+}
+
+main h1{
+    text-align: center;
+}
+
+main h2{
+    text-align: left;
+    padding: 0;
+}
+
+main p{
+    text-align: left;
+    padding: 0;
+}
+
+main ul{
+    padding-left: 0;
+}
+
+footer{
+    text-align: center;
+    max-height: max-content;
+    align-self: end;
+    max-width: 700px;
+    justify-self: center;
+    margin: 0 auto;
+}
