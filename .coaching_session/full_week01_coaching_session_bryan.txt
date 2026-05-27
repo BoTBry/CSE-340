@@ -1,0 +1,199 @@
+Week 01 Coaching Session Transcript
+
+Assistant:
+Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say "I don't know" or "I made a mistake." That's the fastest way we'll learn today.
+
+Also, I’m going to keep this structured and simple so it doesn’t feel overwhelming, and we’ll go step by step together.
+
+Before we start:
+
+What name would you like me to use for you in this session?
+
+User:
+Bryan
+
+Assistant:
+Nice, Bryan 👍
+
+Welcome again—this is a safe learning space where mistakes are expected and even useful for learning.
+
+We’ll go step by step and cover everything, but we’ll start slowly and build up.
+
+## Topic 1: Express Routing
+
+In your project, routing is what decides what happens when someone visits a URL.
+
+Here’s a simple example from a typical Express server:
+
+app.get('/about', (req, res) => {
+  res.render('about', {
+    title: 'About Us',
+    company: 'Service Network'
+  });
+});
+
+This tells the server:
+
+“When someone visits /about, show the about.ejs page and send it some data.”
+
+Question:
+In your own words, what do you think this line does?
+
+app.get('/about', (req, res) => { ... })
+
+User:
+This gets the page which belongs to the "/about" route
+
+Assistant:
+Good, you’ve got the basic idea 👍
+
+You’re close, but let’s tighten it a bit so it’s more accurate.
+
+That line doesn’t directly fetch a page—instead, it creates a rule for the server.
+
+It means:
+
+“When a user visits /about, run this function and decide what to send back.”
+
+So the server is the one responding, not just “getting a page.”
+
+Here’s a more realistic example:
+
+app.get('/products', (req, res) => {
+  const products = ['Phone', 'Laptop', 'Tablet'];
+
+  res.render('products', {
+    title: 'Our Products',
+    products
+  });
+});
+
+Question:
+What do you think the res.render() line is doing in this route?
+
+User:
+It looks for the EJS file then assigns the variable their property
+
+Assistant:
+Good thinking, Bryan — you’re on the right track 👍 but let’s refine it so it’s technically correct.
+
+res.render() does two main things together:
+
+1. It finds and loads the EJS file (like products.ejs)
+2. It injects the data you pass in (like title and products) into that file
+3. Then it converts it into HTML and sends it to the browser
+
+## Topic 2: JavaScript Language Principles
+
+function formatTitle(title) {
+  return title.toUpperCase();
+}
+
+const result = formatTitle('about us');
+
+Question:
+What do you think this function is doing step by step?
+
+User:
+This function accepts a parameter and returns the word in uppercase, in this case the word passed in is "about us"
+
+Assistant:
+Good — that’s correct 👍
+
+The function takes an input called title, converts it to uppercase, and returns the transformed value.
+
+Another example:
+
+function formatTitle(title) {
+  return title.trim().toUpperCase();
+}
+
+const pageTitle = formatTitle('   about us   ');
+
+Question:
+Why do you think someone might use .trim() before converting text to uppercase in a real application?
+
+User:
+It removes any whitespace in front and behind
+
+Assistant:
+Correct 👍
+
+.trim() removes extra spaces at the beginning and end of a string.
+
+## Topic 3: EJS Partials and Pages
+
+<%- include('partials/header') %>
+
+<h1><%= title %></h1>
+
+<%- include('partials/footer') %>
+
+Question:
+Why do you think developers use partials like header and footer instead of writing them on every single page?
+
+User:
+Because it is reusable and easier to edit or modify, instead of manually coding them on every webpage
+
+Assistant:
+Correct 👍
+
+Partials allow developers to reuse common layouts and avoid repeating code.
+
+## Topic 4: Frontend CSS
+
+body {
+  font-family: Arial;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+Question:
+What do you think will happen on the webpage when this CSS is applied?
+
+User:
+The entire pages background color and font changes to #f4f4f4 and Arial.
+The h1 text color changes to blue and it centers itself
+
+Assistant:
+Correct 👍
+
+The body styles affect the whole page, while the h1 styles affect only heading elements.
+
+Final Reflection Question:
+Which of the four topics we covered today felt the most confusing or least clear to you, even slightly?
+
+User:
+Express Routing
+
+Assistant:
+Good choice—that’s a very common one to feel unsure about.
+
+Express routing is how the server decides what to do when a user visits a certain URL.
+
+Example:
+
+app.get('/about', (req, res) => {
+  res.send('About Page');
+});
+
+This means:
+- app.get() listens for GET requests
+- '/about' is the route path
+- req is the request
+- res is the response
+
+Final Question:
+If a user visits /contact and there is no /contact route defined, what happens?
+
+User:
+An error message?
+
+Assistant:
+Yes 👍 More specifically, Express returns a 404 Not Found response because no route matched the request.
+
+End of Session
