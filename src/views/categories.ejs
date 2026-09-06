@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <h2>Upcoming Service Projects</h2>
+    
+    <ul>
+        <% Health_and_Wellness.forEach(item => { %>
+            <li><%= item %></li>
+        <% }); %>
+    </ul>
+</main>
+<%- include('partials/footer') %>

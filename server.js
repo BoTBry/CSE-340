@@ -44,6 +44,12 @@ app.get('/projects', async (req, res) => {
     res.render('projects', { title });
 });
 
+app.get('/categories', async (req, res) =>{
+    const title = 'Categories';
+    const Health_and_Wellness = ["Environmental", "Educational", "Community Service", "Health and Wellness"];
+    res.render('Categories', {title, Health_and_Wellness})
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://127.0.0.1:${PORT}`);
   console.log(`Environment: ${NODE_ENV}`);
