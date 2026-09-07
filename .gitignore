@@ -1,6 +1,6 @@
 node_modules/
 .env
-..coaching_session
+.coaching_session
 
 # Logs
 logs
