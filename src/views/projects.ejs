@@ -9,5 +9,24 @@
         <li>Food Drive - Help collect and distribute food to those in need.</li>
         <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
     </ul>
+
+    <div>
+        <table>
+            <tr>
+                <th><strong>Project Name</strong></th>
+                <th><strong>Organization Name</strong></th>
+                <th><strong>Date</strong></th>
+            </tr>
+
+            <% projects.forEach(project => { %>
+                <tr>
+                    <td><%= project.title %></td>
+                    <td><%= project.organization_name %></td>
+                    <td><%= project.date.getDate() %>/<%= project.date.getMonth() + 1 %>/<%= project.date.getFullYear() %> <%= project.date.getHours() %>h</td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+
 </main>
 <%- include('partials/footer') %>
