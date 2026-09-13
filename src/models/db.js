@@ -13,7 +13,10 @@ import { Pool } from 'pg';
  */
 const pool = new Pool({
     connectionString: process.env.DB_URL,
-    ssl: true
+    ssl: process.env.NODE_ENV === "production"
+        ? { rejectUnauthorized: false }
+        : false
+    // ssl: true
 });
 
 /**
@@ -55,6 +58,7 @@ if (process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING ===
                     duration: `${duration}ms`, 
                     rows: res.rowCount 
                 });
+                console.log("DATABASE_URL exists:", !!process.env.DB_URL);
                 return res;
             } catch (error) {
                 console.error('Error in query:', { 
