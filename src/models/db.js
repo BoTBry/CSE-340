@@ -61,7 +61,7 @@ if (process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING ===
                     duration: `${duration}ms`, 
                     rows: res.rowCount 
                 });
-                console.log("DATABASE_URL exists:", !!process.env.DB_URL);
+                console.log("DB_URL exists:", !!process.env.DB_URL);
                 return res;
             } catch (error) {
                 console.error('Error in query:', { 

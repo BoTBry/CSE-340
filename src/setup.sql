@@ -161,3 +161,78 @@ SELECT
 FROM service_project
 JOIN organization
     ON service_project.organization_id = organization.organization_id;
+
+-- ========================================
+-- Category Table
+--=========================================
+-- Stores the different service project categories
+--=========================================
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- ========================================
+-- Insert sample data: Category
+-- ========================================
+INSERT INTO category (name)
+VALUES
+('Community Development'),
+('Environment'),
+('Education'),
+('Food Support'),
+('Volunteer Assistance');
+
+SELECT * FROM category;
+
+-- ========================================
+-- project_category Table
+--=========================================
+-- Junction table connecting projects and categories
+--=========================================
+CREATE TABLE project_category (
+    project_id INTEGER REFERENCES service_project(project_id),
+    category_id INTEGER REFERENCES category(category_id),
+    PRIMARY KEY (project_id, category_id)
+);
+
+-- ========================================
+-- Insert sample data: Project_Category
+-- ========================================
+INSERT INTO project_category (project_id, category_id)
+VALUES
+-- BrightFuture Builders
+(1, 1), -- Community Center Renovation → Community Development
+(2, 1), -- Neighborhood Playground Build → Community Development
+(3, 1), -- Affordable Home Repair Day → Community Development
+(4, 3), -- School Roof Restoration → Education
+(5, 1), -- Community Ramp Installation → Community Development
+
+-- GreenHarvest Growers
+(6, 2), -- Community Garden Planting → Environment
+(7, 3), -- Urban Farming Workshop → Education
+(8, 3), -- School Vegetable Garden → Education
+(9, 2), -- Community Composting Day → Environment
+(10, 2), -- Winter Harvest Preparation → Environment
+
+-- UnityServe Volunteers
+(11, 4), -- Food Bank Support Day → Food Support
+(12, 2), -- Park Cleanup Initiative → Environment
+(13, 5), -- Senior Community Assistance → Volunteer Assistance
+(14, 4), -- Charity Donation Sorting → Food Support
+(15, 5); -- Holiday Community Drive → Volunteer Assistance
+
+SELECT * FROM project_category;
+
+-- ========================================
+-- Joins the Service_project Table with the Category Table
+-- ========================================
+SELECT
+    service_project.title AS project_title,
+    category.name AS category_name
+FROM project_category
+JOIN service_project
+    ON project_category.project_id = service_project.project_id
+JOIN category
+    ON project_category.category_id = category.category_id
+ORDER BY service_project.project_id;
