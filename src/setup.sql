@@ -25,7 +25,7 @@ VALUES
 CREATE TABLE service_project (
     project_id SERIAL PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
-    organization_id SERIAL REFERENCES organization(organization_id),
+    organization_id INTEGER REFERENCES organization(organization_id),
     description TEXT NOT NULL,
     location TEXT,
     date TIMESTAMP
