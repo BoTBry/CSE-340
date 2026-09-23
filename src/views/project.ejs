@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <p><strong>Description:</strong> <%= projectDetails.description %></p>
+
+    <p><strong>Date:</strong> <%= projectDetails.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+
+    <p><strong>Location:</strong> <%= projectDetails.location %></p>
+
+    <p>
+        <strong>Partner Organization:</strong>
+        <a href="/organization/<%= projectDetails.organization_id %>">
+            <%= projectDetails.organization_name %>
+        </a>
+    </p>
+</main>
+<%- include('partials/footer') %>

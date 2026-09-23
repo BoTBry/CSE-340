@@ -20,8 +20,8 @@
 
             <% projects.forEach(project => { %>
                 <tr>
-                    <td><%= project.title %></td>
-                    <td><%= project.organization_name %></td>
+                    <td><a href="/project/<%= project.project_id %>"><%= project.title %></a></td>
+                    <td><a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></td>
                     <td><%= project.date.getDate() %>/<%= project.date.getMonth() + 1 %>/<%= project.date.getFullYear() %> <%= project.date.getHours() %>h</td>
                 </tr>
             <% }); %>
