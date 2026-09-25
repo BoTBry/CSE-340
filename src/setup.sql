@@ -236,3 +236,45 @@ JOIN service_project
 JOIN category
     ON project_category.category_id = category.category_id
 ORDER BY service_project.project_id;
+
+-- ========================================
+-- Get Organization Details
+-- ========================================
+SELECT organization_id, name, description, contact_email, logo_filename
+FROM organization
+WHERE organization_id = $1;
+
+-- ========================================
+-- Get Projects Belonging To An Organization
+-- ========================================
+SELECT project_id, organization_id, title, description, location, date
+FROM service_project
+WHERE organization_id = $1
+ORDER BY date;
+
+-- ========================================
+-- Get Projects Sorted By Date
+-- ========================================
+SELECT service_project.project_id, service_project.title, service_project.description, service_project.date, service_project.location, service_project.organization_id, organization.name AS organization_name
+FROM service_project
+JOIN organization
+    ON service_project.organization_id = organization.organization_id
+WHERE service_project.date >= CURRENT_DATE
+ORDER BY service_project.date ASC
+LIMIT $1;
+
+-- ========================================
+-- Get Project Details
+-- ========================================
+SELECT service_project.project_id, service_project.title, service_project.description, service_project.date, service_project.location, service_project.organization_id, organization.name AS organization_name
+FROM service_project
+JOIN organization
+    ON service_project.organization_id = organization.organization_id
+WHERE service_project.project_id = $1;
+
+-- ========================================
+-- Get A Single Category
+-- ========================================
+SELECT category_id, name
+FROM category
+WHERE category_id = $1;

@@ -14,5 +14,9 @@
             <%= projectDetails.organization_name %>
         </a>
     </p>
+
+    <% categories.forEach(category => { %>
+        <p><strong>category:</strong> <a href="/category/<%= category.category_id %>"><%= category.name %> </a></p>
+    <% }); %>
 </main>
 <%- include('partials/footer') %>
