@@ -2,7 +2,9 @@
 <main>
     <h1><%= title %></h1>
     
-    <p><a href="/new-organization">Add a new organization</a></p>
+    <% if (isAdmin) { %>
+        <p><a href="/new-organization">Add a new organization</a></p>
+    <% } %>
 
     <p>Here are a few of our partner organizations:</p>
     

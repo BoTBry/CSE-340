@@ -25,7 +25,7 @@ const __dirname = path.dirname(__filename);
 app.use(session({
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: 60 * 60 * 1000 } // Session expires after 1 hour of inactivity
 }));
 
@@ -59,6 +59,15 @@ app.use((req, res, next) => {
 
 // Middleware to make NODE_ENV available to all templates
 app.use((req, res, next) => {
+    res.locals.isLoggedIn = false;
+    res.locals.isAdmin = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
+    
+    if (req.session && req.session.user && req.session.user.role_name === 'admin' ) {
+        res.locals.isAdmin = true;
+    }
     res.locals.NODE_ENV = NODE_ENV;
     next();
 });

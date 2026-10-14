@@ -3,8 +3,9 @@
 
     <h1><%= title %></h1>
 
-    <a href="/edit-category/<%= categoryDetails.category_id%>">Edit category</a>
-
+    <% if (isAdmin) { %>
+        <a href="/edit-category/<%= categoryDetails.category_id%>">Edit category</a>
+    <% } %>
 
     <p>These Are Projects Affiliated To <strong><%= title %></strong></p>
 

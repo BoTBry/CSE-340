@@ -2,8 +2,10 @@
 <main>
     <h1><%= title %></h1>
 
-    <a href="/assign-categories/<%= projectDetails.project_id %>">Edit Categories</a>
-    <a href="/edit-project/<%= projectDetails.project_id %>">Edit Project</a>
+    <% if (isAdmin) { %>
+        <a href="/assign-categories/<%= projectDetails.project_id %>">Edit Categories</a>
+        <a href="/edit-project/<%= projectDetails.project_id %>">Edit Project</a>
+    <% } %>
 
     <p><strong>Description:</strong> <%= projectDetails.description %></p>
 
