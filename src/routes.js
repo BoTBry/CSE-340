@@ -8,7 +8,7 @@ import { showProjectsPage, processNewProjectForm, projectValidation, processEdit
 import { testErrorPage } from './controller/errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, showEditOrganizationForm, processEditOrganizationForm } from './controller/organizations.js';
 import { showProjectDetailsPage, showNewProjectForm, showEditProjectForm } from './controller/projects.js';
-import { showUserRegistrationForm, registrationValidation, loginValidation, processUserRegistrationForm, getUserDetail, processEditUserForm, updateValidation } from './controller/users.js';
+import { showUserRegistrationForm, registrationValidation, loginValidation, processUserRegistrationForm, getUserDetail, processEditUserForm, updateValidation, processRemoveVolunteer } from './controller/users.js';
 import { showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin, requireRole, showAllUserPage, showAdminDashboard, processVolunteer, showVolunteerStatus } from './controller/users.js';
 
 
@@ -89,6 +89,7 @@ router.get('/dashboard', requireLogin, showDashboard);
 
 // Volunteer route
 router.post('/project/:id/volunteer', requireLogin, processVolunteer);
+router.post('/project/:id/remove-volunteer', requireLogin, processRemoveVolunteer);
 
 // Protected admin only routes
 router.get('/admin-dashboard', requireLogin, requireRole('admin'), showAdminDashboard);

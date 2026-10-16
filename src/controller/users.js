@@ -198,10 +198,10 @@ const showDashboard = (req, res) => {
 const requireRole = (requiredRole) => {
     return (req, res, next) => {
 
+        const user = req.session.user;
         if (!req.session || !req.session.user) {
             req.flash('error', 'You must be logged in to access this page.');
             if (res.locals.NODE_ENV === 'development') {
-                const user = req.session.user;
                 console.log('User logged in:', user);
                 console.log(user);
             }
@@ -311,6 +311,20 @@ const showVolunteerStatus = async (req, res, next) => {
     }
 };
 
+const processRemoveVolunteer = async (req, res, next) => {
+    const project_id = req.params.id;
+    const user_id = req.session.user.user_id;
+
+    try {
+        await removeVolunteerFromProject(user_id, project_id);
+
+        req.flash('success', 'You have successfully removed yourself as a volunteer.');
+        res.redirect(`/project/${project_id}`);
+    } catch (error) {
+        next(error);
+    }
+};
 
 
-export { registrationValidation, showVolunteerStatus, processVolunteer, processEditUserForm, updateValidation,  getUserDetail, showAllUserPage, loginValidation, requireRole, showAdminDashboard, requireLogin, showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard };
+
+export { registrationValidation, processRemoveVolunteer, showVolunteerStatus, processVolunteer, processEditUserForm, updateValidation,  getUserDetail, showAllUserPage, loginValidation, requireRole, showAdminDashboard, requireLogin, showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard };

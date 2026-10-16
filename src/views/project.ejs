@@ -9,9 +9,12 @@
     
     <% if (isLoggedIn && isVolunteer) { %>
         <p>You are volunteering for this project</p>
-    <% } %>
 
-    <% if (isLoggedIn && !isVolunteer) { %>
+        <form action="/project/<%= projectDetails.project_id %>/remove-volunteer" method="POST">
+            <button type="submit">Remove Me as a Volunteer</button>
+        </form>
+
+    <% } else if (isLoggedIn && !isVolunteer) { %>
         <form action="/project/<%= projectDetails.project_id %>/volunteer" method="post">
             <button type="submit">volunteer</button>
         </form>
