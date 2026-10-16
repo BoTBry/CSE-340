@@ -17,10 +17,17 @@
                 <li><a href="/register">Register</a></li>
                 <li><a href="/login">Login</a></li>
             <% } else { %>
+
                 <li><a href="/logout">Logout</a></li>
+
             <% } %>
-            <% if (isAdmin) { %>
+
+            <% if (isLoggedIn && isAdmin) { %>
                 <li><a href="/admin-dashboard">Admin Dashboard</a></li>
+            <% } %>
+            
+            <% if (isLoggedIn && !isAdmin) { %>
+                <li><a href="/dashboard">Dashboard</a></li>
             <% } %>
         </ul>
     </nav>

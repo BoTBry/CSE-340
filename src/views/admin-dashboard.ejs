@@ -3,6 +3,11 @@
 <main>
     <h1><%= title %></h1>
 
+    <div>
+        <h2>User Log</h2>
+        <% if (isAdmin) { %><p>View users <a href="/view-users">Here</a></p><% } %>
+    </div>
+
 </main>
 
 <%- include('partials/footer') %>

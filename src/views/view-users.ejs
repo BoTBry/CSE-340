@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <div>
+        <table>
+            <tr>
+                <th><strong>Name</strong></th>
+                <th><strong>Email</strong></th>
+                <th><strong>Date</strong></th>
+                <th><strong>Role</strong></th>
+                <th><strong>Update</strong></th>
+            </tr>
+
+            <% details.forEach(user => { %>
+                <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.created_at.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></td>
+                    <td><%= user.role_name %></td>
+                    <td><a href="/edit-user/<%= user.user_id %>">Edit</a></td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+
+
+</main>
+<%- include('partials/footer') %>

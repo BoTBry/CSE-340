@@ -82,5 +82,60 @@ const getUserInfo = async (email) => {
     return result.rows[0] || null;
 };
 
+const getAllUserDetail = async () => {
+    const query = `SELECT
+        users.user_id,
+        users.name,
+        users.email,
+        users.created_at,
+        roles.role_name
+    FROM users
+    JOIN roles
+        ON users.role_id = roles.role_id;`;
+    
+    const result = await db.query(query);
+    return result.rows.length > 0 ? result.rows : null;
 
-export { createUser, getUserInfo, authenticateUser };
+};
+
+const getUserDetailById = async (id) => {
+    const query = `
+    SELECT
+        users.user_id,
+        users.name,
+        users.email,
+        users.created_at,
+        roles.role_name,
+        users.role_id
+    FROM users
+    JOIN roles
+        ON users.role_id = roles.role_id
+    WHERE users.user_id = $1;`;
+
+    const result = await db.query(query, [id]);
+
+    return result.rows.length > 0 ? result.rows[0] : null;
+};
+
+const updateUser = async (user_id, name, email, role_id) => {
+    const query = `UPDATE users
+        SET
+            name = $1,
+            email = $2,
+            role_id = $3
+        WHERE user_id = $4
+        RETURNING user_id, name, email, created_at, role_id;`;
+
+    const result = await db.query(query, [ name, email, role_id, user_id]);
+
+    if (result.rowCount === 0) {
+        throw new Error("User not found.");
+    }
+    if (process.env.ENABLE_SQL_LOGGING === 'true') {
+        console.log('User Updated:', result.rows[0].user_id);
+    }
+
+    return result.rows[0];
+};
+
+export { createUser, getUserInfo, authenticateUser, getAllUserDetail, getUserDetailById, updateUser };

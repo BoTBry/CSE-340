@@ -316,3 +316,9 @@ JOIN roles r ON u.role_id = r.role_id;
 
 -- Delete the test user
 DELETE FROM users WHERE email = 'test@example.com';
+
+CREATE TABLE project_volunteer (
+    user_id INTEGER NOT NULL REFERENCES users(user_id),
+    project_id INTEGER NOT NULL REFERENCES service_project(project_id),
+    PRIMARY KEY (user_id, project_id)
+);

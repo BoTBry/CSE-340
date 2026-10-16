@@ -8,7 +8,8 @@ import { showProjectsPage, processNewProjectForm, projectValidation, processEdit
 import { testErrorPage } from './controller/errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, showEditOrganizationForm, processEditOrganizationForm } from './controller/organizations.js';
 import { showProjectDetailsPage, showNewProjectForm, showEditProjectForm } from './controller/projects.js';
-import { showUserRegistrationForm, registrationValidation, loginValidation, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin, requireRole, showAdminDashboard } from './controller/users.js';
+import { showUserRegistrationForm, registrationValidation, loginValidation, processUserRegistrationForm, getUserDetail, processEditUserForm, updateValidation } from './controller/users.js';
+import { showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin, requireRole, showAllUserPage, showAdminDashboard, processVolunteer, showVolunteerStatus } from './controller/users.js';
 
 
 const router = express.Router();
@@ -22,7 +23,7 @@ router.get('/projects', showProjectsPage);
 router.get('/organization/:id', showOrganizationDetailsPage);
 
 // Route for project details page
-router.get('/project/:id', showProjectDetailsPage);
+router.get('/project/:id', showVolunteerStatus, showProjectDetailsPage);
 
 // Route for category details page
 router.get('/category/:id', showCategoryDetailsPage);
@@ -81,13 +82,19 @@ router.get('/login', showLoginForm);
 router.post('/login', loginValidation, processLoginForm);
 
 // User logout route
-router.get('/logout', processLogout);
+router.get('/logout', requireLogin, processLogout);
 
 // Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
 
-// Protected admin only route
-router.get('/admin-dashboard', requireRole('admin'), showAdminDashboard);
+// Volunteer route
+router.post('/project/:id/volunteer', requireLogin, processVolunteer);
+
+// Protected admin only routes
+router.get('/admin-dashboard', requireLogin, requireRole('admin'), showAdminDashboard);
+router.get('/view-users', requireLogin, requireRole('admin'), showAllUserPage);
+router.get('/edit-user/:id', requireLogin, requireRole('admin'), getUserDetail);
+router.post('/edit-user/:id', requireLogin, requireRole('admin'), updateValidation, processEditUserForm);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

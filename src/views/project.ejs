@@ -6,6 +6,16 @@
         <a href="/assign-categories/<%= projectDetails.project_id %>">Edit Categories</a>
         <a href="/edit-project/<%= projectDetails.project_id %>">Edit Project</a>
     <% } %>
+    
+    <% if (isLoggedIn && isVolunteer) { %>
+        <p>You are volunteering for this project</p>
+    <% } %>
+
+    <% if (isLoggedIn && !isVolunteer) { %>
+        <form action="/project/<%= projectDetails.project_id %>/volunteer" method="post">
+            <button type="submit">volunteer</button>
+        </form>
+    <% } %>
 
     <p><strong>Description:</strong> <%= projectDetails.description %></p>
 

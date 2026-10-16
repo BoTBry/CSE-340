@@ -14,7 +14,7 @@ JOIN organization
 
     const result = await db.query(query);
     return result.rows;
-}
+};
 
 const getProjectsByOrganizationId = async (organizationId) => {
       const query = `
@@ -97,7 +97,7 @@ const createProject = async (title, description, location, date, organizationId)
     }
 
     return result.rows[0].project_id;
-}
+};
 
 const updateProject  = async (project_id, title, description, date, location, organizationId) => {
     const query = `UPDATE service_project
@@ -122,6 +122,6 @@ const updateProject  = async (project_id, title, description, date, location, or
     }
 
     return result.rows[0];
-}
+};
 
 export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, createProject, updateProject };

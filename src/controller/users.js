@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
-import { createUser, authenticateUser, getUserInfo } from '../models/users.js';
+import { createUser, authenticateUser, getUserInfo, getAllUserDetail, getUserDetailById, updateUser } from '../models/users.js';
+import { addVolunteerToProject, removeVolunteerFromProject, getProjectsByVolunteer, isUserVolunteering } from '../models/volunteer.js';
+import { getProjectDetails } from '../models/projects.js'
 import { body, validationResult } from 'express-validator';
 
 const registrationValidation = [
@@ -54,6 +56,26 @@ const loginValidation = [
         .withMessage('Password must contain at least one symbol')
 ];
 
+const updateValidation = [
+// Email validation
+    body('email')
+        .trim()
+        .notEmpty()
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+        .normalizeEmail(),
+
+// Name validation
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage('Name is required')
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Name must be between 2 and 100 characters'),
+
+];
+
 const showUserRegistrationForm = (req, res) => {
     res.render('register', { title: 'Register' });
 };
@@ -67,7 +89,7 @@ const processUserRegistrationForm = async (req, res) => {
             req.flash('error', error.msg);
         });
 
-        // Redirect back to the new project form
+        // Redirect back to the registration form
         return res.redirect('/register');
     }
     const { name, email, password } = req.body;
@@ -105,7 +127,7 @@ const processLoginForm  = async (req, res) => {
             req.flash('error', error.msg);
         });
 
-        // Redirect back to the new project form
+        // Redirect back to the login form
         return res.redirect('/login');
     }
 
@@ -117,18 +139,18 @@ const processLoginForm  = async (req, res) => {
         if (user) {
             req.session.user = user;
 
-            req.session.userDetail = {
-                user_id: user.user_id,
-                name: user.name,
-                email: user.email,
-                role_id: user.role_id
-                };
+            // req.session.userDetail = {
+            //     user_id: user.user_id,
+            //     name: user.name,
+            //     email: user.email,
+            //     role_id: user.role_id
+            // };
 
-            console.log(user);
             req.flash('success', 'Login successful!');
 
             if (res.locals.NODE_ENV === 'development') {
                 console.log('User logged in:', user);
+                console.log(user);
             }
 
             res.redirect('/dashboard');
@@ -175,11 +197,14 @@ const showDashboard = (req, res) => {
 
 const requireRole = (requiredRole) => {
     return (req, res, next) => {
-        const user = req.session.user;
-        console.log(user);
 
         if (!req.session || !req.session.user) {
             req.flash('error', 'You must be logged in to access this page.');
+            if (res.locals.NODE_ENV === 'development') {
+                const user = req.session.user;
+                console.log('User logged in:', user);
+                console.log(user);
+            }
             return res.redirect('/login');
         }
 
@@ -199,5 +224,93 @@ const showAdminDashboard = async (req, res) => {
     res.render('admin-dashboard', { title: 'Welcome Admin' });
 };
 
+const showAllUserPage = async (req, res) => {
+    const details = await getAllUserDetail();
+    const title = `Users`;
+    console.log(details);
 
-export { registrationValidation, loginValidation, requireRole, showAdminDashboard, requireLogin, showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard };
+    res.render('view-users', {details, title});
+};
+
+const getUserDetail = async (req, res) => {
+    const queryparams = req.params.id;
+    const details = await getUserDetailById(queryparams);
+    const title = 'User info';
+    console.log(details);
+
+    res.render('edit-user', {title, details});
+};
+
+const processEditUserForm = async (req, res) => {
+    const userId = req.params.id;
+
+    // Check for validation errors
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+        // Validation failed - loop through errors
+        results.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+
+        // Redirect back to the edit organization form
+        return res.redirect(`/edit-user/${userId}`);
+    }
+
+    const { name, email, role } = req.body;
+
+    await updateUser(userId, name, email, role);
+    
+    // Set a success flash message
+    req.flash('success', 'User details updated successfully!');
+
+    res.redirect(`/view-users`);
+};
+
+const processVolunteer = async (req, res) => {
+    const projectId = req.params.id;
+    const user = req.session.user.user_id;
+
+    try{
+        // const userDetail = await getUserDetailById(user.user_id);
+        const volunteerUser = await addVolunteerToProject(user, projectId);
+        console.log(volunteerUser);
+
+        // Set a flash message
+        req.flash('success', 'You have successfully volunteered for this project!');
+
+        return res.redirect(`/project/${projectId}`);
+
+    } catch (error) {
+        console.error("Error volunteering for project:", error);
+
+        req.flash("error", "Unable to volunteer for this project.");
+
+        return res.redirect(`/project/${projectId}`);
+    }
+};
+
+
+const showVolunteerStatus = async (req, res, next) => {
+    const project_id = req.params.id;
+
+    try {
+        let isVolunteer = false;
+
+        if (req.session.user) {
+            isVolunteer = await isUserVolunteering(
+                req.session.user.user_id,
+                project_id
+            );
+        }
+
+        res.locals.isVolunteer = isVolunteer;
+
+        next();
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+export { registrationValidation, showVolunteerStatus, processVolunteer, processEditUserForm, updateValidation,  getUserDetail, showAllUserPage, loginValidation, requireRole, showAdminDashboard, requireLogin, showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard };

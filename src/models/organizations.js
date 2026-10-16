@@ -9,7 +9,7 @@ const getAllOrganizations = async() => {
     const result = await db.query(query);
 
     return result.rows;
-}
+};
 
 const getOrganizationDetails = async (organizationId) => {
   const query = `
